@@ -1,6 +1,22 @@
-<h1>{{ question.question_text }}</h1>
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }}</li>
-{% endfor %}
-</ul>
+{% extends 'polls/base.html' %}
+{% block body_block %}
+    <div class="page-header">
+        <h1>{{ question.question_text }}</h1>
+    </div>
+
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+    {% csrf_token %}
+    {% for choice in question.choice_set.all %}
+        <div class="form-group">
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+        </div>
+    {% endfor %}
+        <div class="form-group">
+            <input class="btn btn-default" type="submit" value="Vote" />
+        </div>
+    </form>
+{% endblock %}
