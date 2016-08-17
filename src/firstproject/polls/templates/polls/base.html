@@ -3,6 +3,9 @@
     <head>
         <title>First Django Project</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+        <link rel="shortcut icon" type="image/png" href="{% static 'polls/favicon.ico' %}"/>
     </head>
 
     <body>
