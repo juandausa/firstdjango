@@ -7,15 +7,16 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Question <small class="pull-right">total: {{latest_question_list.count}}</small></th>
+                <th>Question</th><th>Actions </th>
             </tr>
         </thead>
         <tbody>
         {% for question in latest_question_list %}
-            <tr><td><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></td></tr>
+            <tr><td>{{ question.question_text }}</td><td><a href="{% url 'polls:results' question.id %}">Results</a> | <a href="{% url 'polls:detail' question.id %}">Vote</a></td></tr>
         {% endfor %}
         </tbody>
     </table>
+    <small class="pull-right">Total: {{latest_question_list.count}}</small>
     {% else %}
         <p>No polls are available.</p>
     {% endif %}
