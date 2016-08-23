@@ -25,7 +25,16 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class=""><a href="{% url 'polls:index' %}">Questions</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'polls:index' %}">View Recent</a></li>
+                            <li><a href="#">View Most Voted</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Create</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{% url 'admin:index' %}">Admin</a></li>
