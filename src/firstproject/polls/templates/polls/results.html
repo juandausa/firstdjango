@@ -1,25 +1,6 @@
 {% extends 'polls/base.html' %}
 {% block body_block %}
-    <div class="page-header">
-        <h1>{{ question.question_text }}</h1>
-    </div>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Choice Text</th>
-                <th>Votes</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for choice in question.choice_set.all %}
-                <tr>
-                    <td>{{ choice.choice_text }}</td>
-                    <td>{{ choice.votes }} vote{{ choice.votes|pluralize }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    {% include "./_results.html" %}
 
     <a href="{% url 'polls:detail' question.id %}" class="btn btn-default">Vote</a>
 {% endblock %}

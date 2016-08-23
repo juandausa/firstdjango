@@ -1,0 +1,20 @@
+<div class="page-header">
+    <h1>{{ question.question_text }}</h1>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Choice Text</th>
+            <th>Votes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for choice in question.choice_set.all %}
+            <tr>
+                <td>{{ choice.choice_text }}</td>
+                <td>{{ choice.votes }} vote{{ choice.votes|pluralize }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

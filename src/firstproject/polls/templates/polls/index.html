@@ -12,7 +12,7 @@
         </thead>
         <tbody>
         {% for question in latest_question_list %}
-            <tr><td>{{ question.question_text }}</td><td><a href="{% url 'polls:results' question.id %}">Results</a> | <a href="{% url 'polls:detail' question.id %}">Vote</a></td></tr>
+            <tr><td><a data-toggle="modal" data-target="#{{question.id}}">{{ question.question_text }}</a></td><td><a class="btn btn-xs btn-default" href="{% url 'polls:results' question.id %}">Results</a> | <a class="btn btn-xs btn-default" href="{% url 'polls:detail' question.id %}">Vote</a></td></tr>
         {% endfor %}
         </tbody>
     </table>
@@ -20,4 +20,24 @@
     {% else %}
         <p>No polls are available.</p>
     {% endif %}
+    {% for question in latest_question_list %}
+    <!-- Modal -->
+    <div class="modal fade custom-modal-width" id={{ question.id }} tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Question Detail</h4>
+                </div>
+                <div class="modal-body">
+                    {% include "./_results.html" %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 {% endblock %}
