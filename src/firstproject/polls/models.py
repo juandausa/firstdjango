@@ -19,9 +19,16 @@ class Question(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
+    def get_votes(self):
+        votes = 0
+        for _choice in self.choice_set.all():
+            votes += _choice.votes
+        return votes
+
     was_published_recently.admin_order_field = 'pub_date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Published recently?'
+
 
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Choice(models.Model):

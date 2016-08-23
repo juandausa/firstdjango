@@ -23,6 +23,14 @@ class IndexView(generic.ListView):
         ).order_by('-pub_date')[:5]
 
 
+class MostVotedView(generic.ListView):
+    template_name = 'polls/top.html'
+    context_object_name = 'latest_question_list'
+
+    def get_queryset(self):
+        return sorted(Question.objects.all(), key=lambda x: -x.get_votes())
+
+
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'

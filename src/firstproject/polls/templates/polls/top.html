@@ -1,0 +1,26 @@
+{% extends 'polls/base.html' %}
+{% block body_block %}
+    <div class="page-header">
+        <h1>Top Polls</h1>
+    </div>
+    {% if latest_question_list %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Question</th><th>Votes</th><th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for question in latest_question_list %}
+                <tr>
+                    <td><a data-toggle="modal" data-target="#{{question.id}}">{{ question.question_text }}</a></td>
+                    <td>{{ question.get_votes }}</td>
+                    <td><a class="btn btn-xs btn-default" href="{% url 'polls:results' question.id %}">Results</a> | <a class="btn btn-xs btn-default" href="{% url 'polls:detail' question.id %}">Vote</a></td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+    {% include "./_detail_modal.html" %}
+{% endblock %}
