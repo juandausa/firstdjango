@@ -5,6 +5,7 @@ from django.views import generic
 from django.utils import timezone
 
 from .models import Choice, Question
+from .forms import QuestionForm
 
 # Views
 
@@ -64,3 +65,17 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+def question_new(request):
+    if request.method == "POST":
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.pub_date = timezone.now()
+            question.save()
+            return HttpResponseRedirect(reverse('polls:index'))
+    else:
+        form = QuestionForm()
+
+    return render(request, 'polls/question_new.html', {'form': form})
