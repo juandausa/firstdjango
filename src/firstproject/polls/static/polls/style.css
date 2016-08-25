@@ -1,3 +1,11 @@
 .jumbotron.container {
     background-color: white;
 }
+
+form label {
+    font-size: large;
+}
+
+.save.btn {
+    float: right;
+}
