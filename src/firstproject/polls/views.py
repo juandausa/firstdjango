@@ -5,7 +5,7 @@ from django.views import generic
 from django.utils import timezone
 
 from .models import Choice, Question
-from .forms import QuestionForm
+from .forms import QuestionForm, ChoiceForm, ChoiceFormSet
 
 # Views
 
@@ -69,13 +69,21 @@ def vote(request, question_id):
 
 def question_new(request):
     if request.method == "POST":
-        form = QuestionForm(request.POST)
-        if form.is_valid():
-            question = form.save(commit=False)
-            question.pub_date = timezone.now()
-            question.save()
-            return HttpResponseRedirect(reverse('polls:index'))
+        question_form = QuestionForm(request.POST)
+        choices_form = ChoiceFormSet(request.POST)
+        if question_form.is_valid():
+            if choices_form.is_valid():
+                question = question_form.save(commit=False)
+                question.pub_date = timezone.now()
+                question.save()
+                for form in choices_form.forms:
+                    choice = form.save(commit=False)
+                    if not choice.choice_text:
+                        continue
+                    choice.question = question
+                    choice.save()
+                return HttpResponseRedirect(reverse('polls:index'))
     else:
-        form = QuestionForm()
-
-    return render(request, 'polls/question_new.html', {'form': form})
+        question_form = QuestionForm()
+        choices_form = ChoiceFormSet()
+    return render(request, 'polls/question_new.html', {'form': question_form, 'choices_form': choices_form})
